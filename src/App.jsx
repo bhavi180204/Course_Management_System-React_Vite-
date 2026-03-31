@@ -1,37 +1,53 @@
 
-import { BrowserRouter, Routes, Route, Link, createBrowserRouter, RouterProvider } from "react-router-dom";
+import React from "react";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Layout from "./pages/Layout";
 import CourseList from "./pages/CourseList";
 import Login from "./pages/Login";
-import SignUp from "./pages/SignUp";
 import Cart from "./pages/Cart";
+import SignUp from "./pages/SignUp";
 import "./App.css";
-
-const App = () =>{
-   let MyRouter = createBrowserRouter ([
+import AddCourse from "./pages/AddCourse";
+import CourseDetails from "./pages/CourseDetails";
+import UpdateCourse from "./pages/UpdateCourse";
+const App = () => {
+  let myRouter = createBrowserRouter([
     {
-    path: "/",
-    element: <Layout />,
-    children:[ 
+      path: "/",
+      element: <Layout />,
+      children: [
         {
-        path:"/",
-        element : <CourseList />
+          path: "/",
+          element: <CourseList />,
         },
-         {
-        path:"/login",
-        element : <Login />
+        {
+          path: "course/:id",
+          element: <CourseDetails />,
         },
-         {
-        path:"/signUp",
-        element : <SignUp />
+        {
+          path: "update/:id",
+          element: <UpdateCourse />,
         },
-         {
-        path:"/cart",
-        element : <Cart />
+        {
+          path: "/login",
+          element: <Login />,
         },
-    ]
-    }
-   ])
-   return <RouterProvider router = {MyRouter} />;
-}
+        {
+          path: "/signup",
+          element: <SignUp />,
+        },
+        {
+          path: "/cart",
+          element: <Cart />,
+        },
+        {
+          path: "/addCourse",
+          element: <AddCourse />,
+        },
+      ],
+    },
+  ]);
+  return <RouterProvider router={myRouter}>App</RouterProvider>;
+};
+
 export default App;
