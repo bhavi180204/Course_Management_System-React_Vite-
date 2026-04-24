@@ -184,7 +184,6 @@
 
 // export default Navbar;
 
-
 import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { Auth } from "../../../context/AuthContext";
@@ -193,16 +192,28 @@ const Navbar = () => {
   const { user, logout } = useContext(Auth);
   const [menuOpen, setMenuOpen] = useState(false);
 
+  const closeMenu = () => {
+    setMenuOpen(false);
+  };
+
+  const handleLogout = () => {
+    logout();
+    closeMenu();
+  };
+
   return (
     <nav className="relative">
       {/* Desktop Navbar */}
       <div className="hidden md:flex items-center gap-4 font-semibold">
-        
         <Link
           to="/"
-          className="px-3 py-1 rounded-lg text-gray-700 
-          hover:text-white hover:bg-gradient-to-r 
-          hover:from-blue-500 hover:to-purple-500 transition"
+          className="
+            px-3 py-1 rounded-lg text-gray-700
+            hover:text-white
+            hover:bg-gradient-to-r
+            hover:from-blue-500 hover:to-purple-500
+            transition
+          "
         >
           Courses
         </Link>
@@ -210,9 +221,13 @@ const Navbar = () => {
         {user?.role === "admin" && (
           <Link
             to="/addCourse"
-            className="px-3 py-1 rounded-lg text-gray-700 
-            hover:text-white hover:bg-gradient-to-r 
-            hover:from-green-500 hover:to-emerald-500 transition"
+            className="
+              px-3 py-1 rounded-lg text-gray-700
+              hover:text-white
+              hover:bg-gradient-to-r
+              hover:from-green-500 hover:to-emerald-500
+              transition
+            "
           >
             Add Course
           </Link>
@@ -220,9 +235,13 @@ const Navbar = () => {
 
         <Link
           to="/cart"
-          className="px-3 py-1 rounded-lg text-gray-700 
-          hover:text-white hover:bg-gradient-to-r 
-          hover:from-pink-500 hover:to-red-500 transition"
+          className="
+            px-3 py-1 rounded-lg text-gray-700
+            hover:text-white
+            hover:bg-gradient-to-r
+            hover:from-pink-500 hover:to-red-500
+            transition
+          "
         >
           🛒 Cart
         </Link>
@@ -230,8 +249,12 @@ const Navbar = () => {
         {user ? (
           <button
             onClick={logout}
-            className="px-4 py-1.5 rounded-lg text-white 
-            bg-gradient-to-r from-red-500 to-pink-500"
+            className="
+              px-4 py-1.5 rounded-lg text-white
+              bg-gradient-to-r
+              from-red-500 to-pink-500
+              hover:scale-105 transition
+            "
           >
             Logout
           </button>
@@ -239,16 +262,24 @@ const Navbar = () => {
           <>
             <Link
               to="/login"
-              className="px-4 py-1.5 rounded-lg text-white 
-              bg-gradient-to-r from-blue-500 to-indigo-500"
+              className="
+                px-4 py-1.5 rounded-lg text-white
+                bg-gradient-to-r
+                from-blue-500 to-indigo-500
+                hover:scale-105 transition
+              "
             >
               Login
             </Link>
 
             <Link
               to="/signup"
-              className="px-4 py-1.5 rounded-lg text-white 
-              bg-gradient-to-r from-purple-500 to-pink-500"
+              className="
+                px-4 py-1.5 rounded-lg text-white
+                bg-gradient-to-r
+                from-purple-500 to-pink-500
+                hover:scale-105 transition
+              "
             >
               Sign Up
             </Link>
@@ -256,37 +287,83 @@ const Navbar = () => {
         )}
       </div>
 
-      {/* Mobile Hamburger */}
+      {/* Mobile Navbar */}
       <div className="md:hidden">
         <button
           onClick={() => setMenuOpen(!menuOpen)}
-          className="text-2xl"
+          className="text-2xl font-bold"
         >
-          ☰
+          {menuOpen ? "✖" : "☰"}
         </button>
 
         {menuOpen && (
           <div
             className="
               absolute right-0 mt-3
-              bg-white shadow-lg rounded-lg
-              w-48 p-4 flex flex-col gap-3 z-50
+              w-52
+              bg-white
+              rounded-xl
+              shadow-xl
+              p-4
+              flex flex-col gap-3
+              z-50
+              border border-gray-100
             "
           >
-            <Link to="/">Courses</Link>
+            <Link
+              to="/"
+              onClick={closeMenu}
+              className="hover:text-blue-500"
+            >
+              Courses
+            </Link>
 
             {user?.role === "admin" && (
-              <Link to="/addCourse">Add Course</Link>
+              <Link
+                to="/addCourse"
+                onClick={closeMenu}
+                className="hover:text-green-500"
+              >
+                Add Course
+              </Link>
             )}
 
-            <Link to="/cart">Cart</Link>
+            <Link
+              to="/cart"
+              onClick={closeMenu}
+              className="hover:text-pink-500"
+            >
+              Cart
+            </Link>
 
             {user ? (
-              <button onClick={logout}>Logout</button>
+              <button
+                onClick={handleLogout}
+                className="
+                  text-left
+                  text-red-500
+                  font-semibold
+                "
+              >
+                Logout
+              </button>
             ) : (
               <>
-                <Link to="/login">Login</Link>
-                <Link to="/signup">Sign Up</Link>
+                <Link
+                  to="/login"
+                  onClick={closeMenu}
+                  className="hover:text-blue-500"
+                >
+                  Login
+                </Link>
+
+                <Link
+                  to="/signup"
+                  onClick={closeMenu}
+                  className="hover:text-purple-500"
+                >
+                  Sign Up
+                </Link>
               </>
             )}
           </div>
