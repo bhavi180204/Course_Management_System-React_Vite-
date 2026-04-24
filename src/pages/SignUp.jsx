@@ -150,7 +150,12 @@ const SignUp = () => {
     role: "user",
   });
 
-  const { password, confirmPassword, email, username } = formData;
+  const {
+    username,
+    email,
+    password,
+    confirmPassword,
+  } = formData;
 
   const handleChange = (e) => {
     setFormData({
@@ -166,45 +171,73 @@ const SignUp = () => {
       return toast.error("Passwords do not match ❌");
     }
 
-    const alreadyExist = await axios.get(
-      `http://localhost:3000/users?email=${email}`
-    );
+    try {
+      const alreadyExist = await axios.get(
+        `http://localhost:3000/users?email=${email}`
+      );
 
-    if (alreadyExist.data.length > 0) {
-      toast.error("User already exists ⚠️");
-    } else {
-      try {
-        const res = await axios.post(
-          "http://localhost:3000/users",
-          formData
-        );
-
-        if (res.status === 201) {
-          toast.success("Account created 🎉");
-          navigate("/login");
-        }
-      } catch (err) {
-        toast.error("Error creating account ❌");
+      if (alreadyExist.data.length > 0) {
+        toast.error("User already exists ⚠️");
+        return;
       }
-    }
 
-    setFormData({
-      id: randomId(),
-      username: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-      role: "user",
-    });
+      const res = await axios.post(
+        "http://localhost:3000/users",
+        formData
+      );
+
+      if (res.status === 201) {
+        toast.success("Account created 🎉");
+        navigate("/login");
+      }
+
+      setFormData({
+        id: randomId(),
+        username: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+        role: "user",
+      });
+    } catch (err) {
+      toast.error("Error creating account ❌");
+    }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
+    <div
+      className="
+        min-h-screen
+        flex items-center justify-center
+        px-4 sm:px-6
+        py-6 sm:py-10
+        bg-gradient-to-br
+        from-blue-50 via-purple-50 to-pink-50
+      "
+    >
       <form
         onSubmit={handleSubmit}
-        className="w-full max-w-md p-8 rounded-3xl bg-white/80 backdrop-blur-lg border border-purple-100 shadow-2xl space-y-5"
+        className="
+          w-full max-w-md
+          p-5 sm:p-8
+          rounded-2xl sm:rounded-3xl
+          bg-white/80
+          backdrop-blur-lg
+          border border-purple-100
+          shadow-2xl
+          space-y-5
+        "
       >
-        <h2 className="text-3xl font-extrabold text-center bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
+        {/* Heading */}
+        <h2
+          className="
+            text-2xl sm:text-3xl
+            font-extrabold text-center
+            bg-gradient-to-r
+            from-blue-600 via-purple-600 to-pink-600
+            bg-clip-text text-transparent
+          "
+        >
           Create Account ✨
         </h2>
 
@@ -212,66 +245,122 @@ const SignUp = () => {
           Join and start learning today 🚀
         </p>
 
+        {/* Username */}
         <div>
-          <label className="text-sm text-gray-600">Username</label>
+          <label className="text-sm text-gray-600">
+            Username
+          </label>
+
           <input
             type="text"
             name="username"
             value={username}
             onChange={handleChange}
             placeholder="Enter username"
-            className="w-full mt-1 px-4 py-2 border rounded-xl focus:ring-2 focus:ring-blue-400 outline-none"
+            className="
+              w-full mt-1
+              px-3 sm:px-4 py-2
+              border rounded-xl
+              focus:ring-2 focus:ring-blue-400
+              outline-none
+            "
           />
         </div>
 
+        {/* Email */}
         <div>
-          <label className="text-sm text-gray-600">Email</label>
+          <label className="text-sm text-gray-600">
+            Email
+          </label>
+
           <input
             type="email"
             name="email"
             value={email}
             onChange={handleChange}
             placeholder="example@email.com"
-            className="w-full mt-1 px-4 py-2 border rounded-xl focus:ring-2 focus:ring-purple-400 outline-none"
+            className="
+              w-full mt-1
+              px-3 sm:px-4 py-2
+              border rounded-xl
+              focus:ring-2 focus:ring-purple-400
+              outline-none
+            "
           />
         </div>
 
+        {/* Password */}
         <div>
-          <label className="text-sm text-gray-600">Password</label>
+          <label className="text-sm text-gray-600">
+            Password
+          </label>
+
           <input
             type="password"
             name="password"
             value={password}
             onChange={handleChange}
             placeholder="••••••••"
-            className="w-full mt-1 px-4 py-2 border rounded-xl focus:ring-2 focus:ring-pink-400 outline-none"
+            className="
+              w-full mt-1
+              px-3 sm:px-4 py-2
+              border rounded-xl
+              focus:ring-2 focus:ring-pink-400
+              outline-none
+            "
           />
         </div>
 
+        {/* Confirm Password */}
         <div>
-          <label className="text-sm text-gray-600">Confirm Password</label>
+          <label className="text-sm text-gray-600">
+            Confirm Password
+          </label>
+
           <input
             type="password"
             name="confirmPassword"
             value={confirmPassword}
             onChange={handleChange}
             placeholder="••••••••"
-            className="w-full mt-1 px-4 py-2 border rounded-xl focus:ring-2 focus:ring-indigo-400 outline-none"
+            className="
+              w-full mt-1
+              px-3 sm:px-4 py-2
+              border rounded-xl
+              focus:ring-2 focus:ring-indigo-400
+              outline-none
+            "
           />
         </div>
 
+        {/* Submit Button */}
         <button
           type="submit"
-          className="w-full py-2.5 rounded-xl font-semibold text-white bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 hover:scale-105 transition duration-300 shadow-lg"
+          className="
+            w-full py-2.5
+            rounded-xl
+            font-semibold text-white
+            bg-gradient-to-r
+            from-blue-500 via-purple-500 to-pink-500
+            hover:scale-105
+            transition duration-300
+            shadow-lg
+          "
         >
           Sign Up 🚀
         </button>
 
+        {/* Login Link */}
         <p className="text-center text-sm text-gray-500">
           Already have an account?{" "}
           <Link
             to="/login"
-            className="font-semibold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"
+            className="
+              font-semibold
+              bg-gradient-to-r
+              from-blue-600 to-purple-600
+              bg-clip-text text-transparent
+            "
           >
             Login
           </Link>

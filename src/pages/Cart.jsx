@@ -1,16 +1,90 @@
-const Cart = () => {
+// const Cart = () => {
 
+//   const cartItems = [
+//     {
+//       id: 1,
+//       title: "React JS Course",
+//       price: 999
+//     },
+//     {
+//       id: 2,
+//       title: "Java Full Stack",
+//       price: 1999
+//     }
+//   ];
+
+//   const total = cartItems.reduce(
+//     (sum, item) => sum + item.price,
+//     0
+//   );
+
+//   return (
+
+//     <div className="p-8">
+
+//       <h1 className="text-3xl font-bold text-center mb-8 text-green-600">
+//         Your Cart
+//       </h1>
+
+//       <div className="max-w-3xl mx-auto">
+
+//         {
+//           cartItems.map((item) => (
+
+//             <div
+//               key={item.id}
+//               className="flex justify-between items-center bg-white shadow-md p-4 rounded-lg mb-4"
+//             >
+
+//               <h2 className="font-semibold">
+//                 {item.title}
+//               </h2>
+
+//               <p>
+//                 ₹ {item.price}
+//               </p>
+
+//             </div>
+
+//           ))
+//         }
+
+//         <div className="bg-gray-200 p-4 rounded-lg flex justify-between font-bold text-lg">
+
+//           <span>Total</span>
+
+//           <span>₹ {total}</span>
+
+//         </div>
+
+//         <button
+//           className="w-full mt-6 bg-green-600 text-white p-3 rounded-lg hover:bg-green-700"
+//         >
+//           Checkout
+//         </button>
+
+//       </div>
+
+//     </div>
+
+//   );
+// };
+
+// export default Cart;
+
+
+const Cart = () => {
   const cartItems = [
     {
       id: 1,
       title: "React JS Course",
-      price: 999
+      price: 999,
     },
     {
       id: 2,
       title: "Java Full Stack",
-      price: 1999
-    }
+      price: 1999,
+    },
   ];
 
   const total = cartItems.reduce(
@@ -19,54 +93,84 @@ const Cart = () => {
   );
 
   return (
-
-    <div className="p-8">
-
-      <h1 className="text-3xl font-bold text-center mb-8 text-green-600">
-        Your Cart
+    <div
+      className="
+        min-h-screen
+        px-4 sm:px-6 lg:px-8
+        py-6 sm:py-8
+        bg-gradient-to-br
+        from-green-50 via-white to-blue-50
+      "
+    >
+      {/* Heading */}
+      <h1
+        className="
+          text-2xl sm:text-3xl
+          font-bold text-center
+          mb-6 sm:mb-8
+          text-green-600
+        "
+      >
+        Your Cart 🛒
       </h1>
 
       <div className="max-w-3xl mx-auto">
+        {cartItems.map((item) => (
+          <div
+            key={item.id}
+            className="
+              flex flex-col sm:flex-row
+              justify-between sm:items-center
+              gap-2
+              bg-white shadow-md
+              p-4
+              rounded-lg
+              mb-4
+            "
+          >
+            <h2 className="font-semibold text-sm sm:text-base">
+              {item.title}
+            </h2>
 
-        {
-          cartItems.map((item) => (
+            <p className="text-green-600 font-medium">
+              ₹ {item.price}
+            </p>
+          </div>
+        ))}
 
-            <div
-              key={item.id}
-              className="flex justify-between items-center bg-white shadow-md p-4 rounded-lg mb-4"
-            >
-
-              <h2 className="font-semibold">
-                {item.title}
-              </h2>
-
-              <p>
-                ₹ {item.price}
-              </p>
-
-            </div>
-
-          ))
-        }
-
-        <div className="bg-gray-200 p-4 rounded-lg flex justify-between font-bold text-lg">
-
+        {/* Total Section */}
+        <div
+          className="
+            bg-gray-200
+            p-4
+            rounded-lg
+            flex flex-col sm:flex-row
+            justify-between
+            gap-2
+            font-bold
+            text-base sm:text-lg
+          "
+        >
           <span>Total</span>
-
           <span>₹ {total}</span>
-
         </div>
 
+        {/* Checkout Button */}
         <button
-          className="w-full mt-6 bg-green-600 text-white p-3 rounded-lg hover:bg-green-700"
+          className="
+            w-full mt-6
+            bg-green-600 text-white
+            py-3
+            rounded-lg
+            text-sm sm:text-base
+            hover:bg-green-700
+            transition
+          "
         >
           Checkout
         </button>
-
       </div>
-
     </div>
-
   );
 };
 

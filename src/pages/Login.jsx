@@ -126,6 +126,145 @@
 // export default Login;
 
 
+// import axios from "axios";
+// import React, { useContext, useState } from "react";
+// import toast from "react-hot-toast";
+// import { Link, useNavigate } from "react-router-dom";
+// import { Auth } from "../../context/AuthContext";
+
+// const Login = () => {
+//   const { login } = useContext(Auth);
+//   const navigate = useNavigate();
+
+//   const [formData, setFormData] = useState({
+//     email: "",
+//     password: "",
+//     role: "",
+//   });
+
+//   const { password, email, role } = formData;
+
+//   const handleChange = (e) => {
+//     setFormData({
+//       ...formData,
+//       [e.target.name]: e.target.value,
+//     });
+//   };
+
+//   const handleSubmit = async (e) => {
+//     e.preventDefault();
+
+//     const res = await axios.get(
+//       `http://localhost:3000/users?email=${email}&password=${password}&role=${role}`
+//     );
+
+//     if (res.status === 200 && res.data.length > 0) {
+//       login(res.data[0]);
+//       toast.success("Login Successful 🎉");
+//       navigate("/");
+//     } else {
+//       toast.error("User not found ❌");
+//     }
+
+//     setFormData({
+//       email: "",
+//       password: "",
+//       role: "",
+//     });
+//   };
+
+//   return (
+//     <div className="min-h-screen flex items-center justify-center px-4 bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
+//       <form
+//         onSubmit={handleSubmit}
+//         className="w-full max-w-md p-8 rounded-3xl bg-white/80 backdrop-blur-lg border border-purple-100 shadow-2xl space-y-5"
+//       >
+//         <h2 className="text-3xl font-extrabold text-center bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
+//           Welcome Back 👋
+//         </h2>
+
+//         <p className="text-center text-gray-500 text-sm">
+//           Login to continue learning 🚀
+//         </p>
+
+//         <div>
+//           <label className="text-sm text-gray-600">Email</label>
+
+//           <input
+//             type="email"
+//             name="email"
+//             value={email}
+//             onChange={handleChange}
+//             placeholder="example@email.com"
+//             className="w-full mt-1 px-4 py-2 border rounded-xl focus:ring-2 focus:ring-purple-400 outline-none"
+//           />
+//         </div>
+
+//         <div>
+//           <label className="text-sm text-gray-600">Password</label>
+
+//           <input
+//             type="password"
+//             name="password"
+//             value={password}
+//             onChange={handleChange}
+//             placeholder="••••••••"
+//             className="w-full mt-1 px-4 py-2 border rounded-xl focus:ring-2 focus:ring-pink-400 outline-none"
+//           />
+//         </div>
+
+//         <div>
+//           <label className="text-sm text-gray-600">Select Role</label>
+
+//           <div className="flex gap-5 mt-2">
+//             <label className="flex items-center gap-2 px-3 py-1 rounded-lg border cursor-pointer hover:bg-blue-50">
+//               <input
+//                 type="radio"
+//                 name="role"
+//                 value="user"
+//                 checked={role === "user"}
+//                 onChange={handleChange}
+//               />
+//               User
+//             </label>
+
+//             <label className="flex items-center gap-2 px-3 py-1 rounded-lg border cursor-pointer hover:bg-purple-50">
+//               <input
+//                 type="radio"
+//                 name="role"
+//                 value="admin"
+//                 checked={role === "admin"}
+//                 onChange={handleChange}
+//               />
+//               Admin
+//             </label>
+//           </div>
+//         </div>
+
+//         <button
+//           type="submit"
+//           className="w-full py-2.5 rounded-xl font-semibold text-white bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 hover:scale-105 transition duration-300 shadow-lg"
+//         >
+//           Login 🔐
+//         </button>
+
+//         <p className="text-center text-sm text-gray-500">
+//           Don't have an account?{" "}
+//           <Link
+//             to="/signup"
+//             className="font-semibold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"
+//           >
+//             Sign Up
+//           </Link>
+//         </p>
+//       </form>
+//     </div>
+//   );
+// };
+
+// export default Login;
+
+
 import axios from "axios";
 import React, { useContext, useState } from "react";
 import toast from "react-hot-toast";
@@ -142,7 +281,7 @@ const Login = () => {
     role: "",
   });
 
-  const { password, email, role } = formData;
+  const { email, password, role } = formData;
 
   const handleChange = (e) => {
     setFormData({
@@ -154,32 +293,63 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const res = await axios.get(
-      `http://localhost:3000/users?email=${email}&password=${password}&role=${role}`
-    );
+    try {
+      const res = await axios.get(
+        `http://localhost:3000/users?email=${email}&password=${password}&role=${role}`
+      );
 
-    if (res.status === 200 && res.data.length > 0) {
-      login(res.data[0]);
-      toast.success("Login Successful 🎉");
-      navigate("/");
-    } else {
-      toast.error("User not found ❌");
+      if (res.status === 200 && res.data.length > 0) {
+        login(res.data[0]);
+        toast.success("Login Successful 🎉");
+        navigate("/");
+      } else {
+        toast.error("User not found ❌");
+      }
+
+      setFormData({
+        email: "",
+        password: "",
+        role: "",
+      });
+    } catch (error) {
+      toast.error("Login failed ❌");
     }
-
-    setFormData({
-      email: "",
-      password: "",
-      role: "",
-    });
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
+    <div
+      className="
+        min-h-screen
+        flex items-center justify-center
+        px-4 sm:px-6
+        py-6 sm:py-10
+        bg-gradient-to-br
+        from-blue-50 via-purple-50 to-pink-50
+      "
+    >
       <form
         onSubmit={handleSubmit}
-        className="w-full max-w-md p-8 rounded-3xl bg-white/80 backdrop-blur-lg border border-purple-100 shadow-2xl space-y-5"
+        className="
+          w-full max-w-md
+          p-5 sm:p-8
+          rounded-2xl sm:rounded-3xl
+          bg-white/80
+          backdrop-blur-lg
+          border border-purple-100
+          shadow-2xl
+          space-y-5
+        "
       >
-        <h2 className="text-3xl font-extrabold text-center bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
+        {/* Heading */}
+        <h2
+          className="
+            text-2xl sm:text-3xl
+            font-extrabold text-center
+            bg-gradient-to-r
+            from-blue-600 via-purple-600 to-pink-600
+            bg-clip-text text-transparent
+          "
+        >
           Welcome Back 👋
         </h2>
 
@@ -187,8 +357,11 @@ const Login = () => {
           Login to continue learning 🚀
         </p>
 
+        {/* Email */}
         <div>
-          <label className="text-sm text-gray-600">Email</label>
+          <label className="text-sm text-gray-600">
+            Email
+          </label>
 
           <input
             type="email"
@@ -196,12 +369,21 @@ const Login = () => {
             value={email}
             onChange={handleChange}
             placeholder="example@email.com"
-            className="w-full mt-1 px-4 py-2 border rounded-xl focus:ring-2 focus:ring-purple-400 outline-none"
+            className="
+              w-full mt-1
+              px-3 sm:px-4 py-2
+              border rounded-xl
+              focus:ring-2 focus:ring-purple-400
+              outline-none
+            "
           />
         </div>
 
+        {/* Password */}
         <div>
-          <label className="text-sm text-gray-600">Password</label>
+          <label className="text-sm text-gray-600">
+            Password
+          </label>
 
           <input
             type="password"
@@ -209,15 +391,38 @@ const Login = () => {
             value={password}
             onChange={handleChange}
             placeholder="••••••••"
-            className="w-full mt-1 px-4 py-2 border rounded-xl focus:ring-2 focus:ring-pink-400 outline-none"
+            className="
+              w-full mt-1
+              px-3 sm:px-4 py-2
+              border rounded-xl
+              focus:ring-2 focus:ring-pink-400
+              outline-none
+            "
           />
         </div>
 
+        {/* Role Selection */}
         <div>
-          <label className="text-sm text-gray-600">Select Role</label>
+          <label className="text-sm text-gray-600">
+            Select Role
+          </label>
 
-          <div className="flex gap-5 mt-2">
-            <label className="flex items-center gap-2 px-3 py-1 rounded-lg border cursor-pointer hover:bg-blue-50">
+          <div
+            className="
+              flex flex-col sm:flex-row
+              gap-3 sm:gap-5
+              mt-2
+            "
+          >
+            <label
+              className="
+                flex items-center gap-2
+                px-3 py-2
+                rounded-lg border
+                cursor-pointer
+                hover:bg-blue-50
+              "
+            >
               <input
                 type="radio"
                 name="role"
@@ -228,7 +433,15 @@ const Login = () => {
               User
             </label>
 
-            <label className="flex items-center gap-2 px-3 py-1 rounded-lg border cursor-pointer hover:bg-purple-50">
+            <label
+              className="
+                flex items-center gap-2
+                px-3 py-2
+                rounded-lg border
+                cursor-pointer
+                hover:bg-purple-50
+              "
+            >
               <input
                 type="radio"
                 name="role"
@@ -241,18 +454,34 @@ const Login = () => {
           </div>
         </div>
 
+        {/* Button */}
         <button
           type="submit"
-          className="w-full py-2.5 rounded-xl font-semibold text-white bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 hover:scale-105 transition duration-300 shadow-lg"
+          className="
+            w-full py-2.5
+            rounded-xl
+            font-semibold text-white
+            bg-gradient-to-r
+            from-blue-500 via-purple-500 to-pink-500
+            hover:scale-105
+            transition duration-300
+            shadow-lg
+          "
         >
           Login 🔐
         </button>
 
+        {/* Signup */}
         <p className="text-center text-sm text-gray-500">
           Don't have an account?{" "}
           <Link
             to="/signup"
-            className="font-semibold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"
+            className="
+              font-semibold
+              bg-gradient-to-r
+              from-blue-600 to-purple-600
+              bg-clip-text text-transparent
+            "
           >
             Sign Up
           </Link>
