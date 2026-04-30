@@ -220,6 +220,8 @@ import React, { useEffect, useState } from "react";
 import CourseCard from "../component/CourseCard/CourseCard";
 import toast from "react-hot-toast";
 
+import { courses } from "../data/data";
+
 const CourseList = () => {
   const [allCourses, setAllCourses] = useState([]);
 
@@ -325,6 +327,56 @@ const CourseList = () => {
     </div>
   );
 };
+
+
+
+
+
+// const CourseList = () => {
+//   return (
+//     <div className="min-h-screen bg-gray-100 p-6">
+//       <h1 className="text-3xl font-bold text-center mb-8">
+//         Our Courses
+//       </h1>
+
+//       <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+//         {courses.map((c) => (
+//           <div
+//             key={c.id}
+//             className="bg-white rounded-2xl shadow-md hover:shadow-xl transition duration-300 p-4"
+//           >
+//             <img
+//               src={c.c_img}
+//               alt={c.c_name}
+//               className="w-full h-40 object-cover rounded-lg"
+//             />
+
+//             <h2 className="text-xl font-semibold mt-3 capitalize">
+//               {c.c_name}
+//             </h2>
+
+//             <p className="text-gray-600 mt-1">
+//               Fee: ₹{c.c_fee}
+//             </p>
+
+//             <p className="text-gray-600">
+//               Author: {c.c_author}
+//             </p>
+
+//             <p className="text-gray-600">
+//               Duration: {c.c_duration}
+//             </p>
+
+//             <button className="mt-4 w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition">
+//               Enroll Now
+//             </button>
+//           </div>
+//         ))}
+//       </div>
+//     </div>
+//   );
+// };
+
 
 export default CourseList;
 // // // 1.to change the port no -->json-server backend/db.json --port=5000
